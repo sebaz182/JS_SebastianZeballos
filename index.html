@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous">
+        <link rel="stylesheet" href="./css/main.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <title>Pre-Entrega n°3 - Zeballos Sebastian</title>
+    </head>
+    <body>
+        <h1>Bienvenido al Cotizador de Planes de Ahorro</h1>
+        <section class="filter">
+            <div
+                class="col-12 d-flex justify-content-between align-items-center">
+                <div class="col-3">
+                    <h2>Segmento</h2>
+                    <select id="segmentoSelect" class="form-select"
+                        aria-label="Default select example">
+                        <option selected>-- Todos --</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <h2>Marca</h2>
+                    <select id="marcaSelect" class="form-select"
+                        aria-label="Default select example">
+                        <option selected>-- Todos --</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <h2>Modelo</h2>
+                    <select id="modeloSelect" class="form-select"
+                        aria-label="Default select example">
+                        <option selected>-- Todos --</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <button id="filtrar" type="button"
+                        class="btn btn-secondary btn-lg">Filtrar</button>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div id="planesSection" class="tarjetas"></div>
+            <!-- carga las tarjetas -->
+        </section>
+
+        <footer>
+            <section class="footer">
+                <div class="row d-flex align-items-center col-12">
+                    <div>
+                        <h2>Powered by Seba Zeballos ©</h2>
+                    </div>
+                </div>
+            </section>
+        </footer>
+
+        <!-- Modal busqueda sin resultado -->
+        <div class="modal fade" id="sinResultadosModal" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Sin
+                            Resultados</h5>
+                        <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        No se encontraron resultados para la busqueda realizada.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Formulario de Compra-->
+        <div class="modal fade" id="formularioModal" tabindex="-1"
+            aria-labelledby="formularioModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"><b>Formulario de Compra</b></h3>
+                    </div>
+                    <div class="modal-body">
+                        <h5><b>Vehiculo Elegido</b></h5>
+                        <!-- carga de datos desde JS -->
+                        <p id="modelo"></p>
+                        <p id="precio"></p>
+                        <p id="financiacion"></p>
+                        <p id="entregaMinima"></p>
+
+                        <form id="form_client">
+                            <h5><b>Datos personales</b></h5>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1"
+                                    class="form-label">Correo electrónico</label>
+                                <input type="email" class="form-control"
+                                    id="email" aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Nunca
+                                    compartiremos su correo electrónico con
+                                    nadie más.</div>
+                            </div>
+                            <h6>Entrega</h6>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control"
+                                    id="entrega" aria-label="Pesos">
+                            </div>
+                            <h6>Seleccione un Plan de Cuotas</h6>
+                            <div id="contenedorCantCuotas">
+                                <!-- carga las cantidad de cuotas con DOM -->
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btn_calcular"
+                            class="btn btn-primary">Calcular</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal detalle de la Compra-->
+        <div class="modal" id="detalleCompraModal" tabindex="-1"
+            aria-labelledby="presupuestoLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title"><b>Detalle de la Compra</b></h2>
+                    </div>
+                    <div class="modal-body">
+                        <h3><b>Vehiculo Elegido</b></h3>
+                        <br>
+                        <div id="contenedorDetalleCompra">
+                            <!-- Carga con DOM -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="close"
+                            class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+            <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous"></script>
+            <script src="./data/planes.js"></script>
+            <script src="./js/main.js"></script>
+        </body>
+
+    </html>
