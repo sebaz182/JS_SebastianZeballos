@@ -1,6 +1,6 @@
-// 3da Pre Entrega JS - Zeballos Sebastian
+// Entrega Final JS - Zeballos Sebastian
 // En esta entrega realizare un simulador donde nos va a mostrar diferentes opciones para comprar un plan de ahorro de un vehiculo
-
+// Se incluyo una consulta via fetch para consultar la cotizacion del dolar del dia.
 
 // --- DOM "Carga de filtros" -- //
 
@@ -235,6 +235,22 @@ let planSeleccionado = p => {
     const dato = JSON.stringify(p);
     localStorage.setItem('plan', dato)
 }
+
+//----uso de API FETCH----//
+
+let url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+
+fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        const dolarventa = parseFloat(data[1]["casa"]["venta"])
+
+        const dolarelement = document.createElement("div")
+        dolarelement.innerHTML = `
+    <h5 class="dolar">Cotización Dolar hoy: U$D ${dolarventa}<h5>`;
+        datodolar.appendChild(dolarelement);
+        sessionStorage.setItem("Dolar", dolarventa)
+    })
 
 
 cargarPlanes(planes);

@@ -118,3 +118,10 @@ h2{
 .fichas div a{
     margin-top: 35px;
 }
+
+.dolar{
+    background-color: gray;
+    color: white;
+    text-align: center;
+    align-items: center;
+}
