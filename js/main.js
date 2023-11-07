@@ -238,16 +238,16 @@ let planSeleccionado = p => {
 
 //----uso de API FETCH----//
 
-let url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+let url = "https://dolarapi.com/v1/dolares/blue"
 
 fetch(url)
     .then(response => response.json())
     .then(data => {
-        const dolarventa = parseFloat(data[1]["casa"]["venta"])
+        const dolarventa = parseFloat(data["venta"])
 
         const dolarelement = document.createElement("div")
         dolarelement.innerHTML = `
-    <h5 class="dolar">Cotización Dolar hoy: U$D ${dolarventa}<h5>`;
+    <h5 class="dolar">Cotización Dolar Blue hoy: U$D ${dolarventa}<h5>`;
         datodolar.appendChild(dolarelement);
         sessionStorage.setItem("Dolar", dolarventa)
     })
